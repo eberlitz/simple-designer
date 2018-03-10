@@ -20,9 +20,11 @@ var tree = {
   ]
 };
 
+var designerToolsPreview = document.getElementById("designer-tools-preview");
 var designerTools = document.getElementById("designer-tools");
 
 var viewer = document.getElementById("viewer");
+var elProperties = document.getElementById("elProperties");
 
 var selectedElement = null;
 
@@ -32,31 +34,34 @@ var dropEl = null;
 viewer.addEventListener("mousedown", evt => {
   if (!dropEl && currentElement) {
     // Tem bug aqui no mouse down
-    selectedElement = currentElement;
+    selectControl(currentElement);
     currentElement.draggable = true;
     // designerTools.style.display = "none";
   }
 });
 viewer.addEventListener("mouseout", evt => {
   !dropEl && (evt.target.draggable = null);
-  if (!designerTools.contains(evt.toElement)) {
+  if (!designerToolsPreview.contains(evt.toElement)) {
     currentElement = null;
-    designerTools.style.display = "none";
+    designerToolsPreview.style.display = "none";
   }
 });
 viewer.addEventListener("mousemove", evt => {
   var el = evt.target;
 
   if (currentElement !== el && !dropEl) {
-    var { top, left, width, height } = el.getBoundingClientRect();
-    designerTools.style.display = null;
-    designerTools.style.width = width + "px";
-    designerTools.style.height = height + "px";
-
-    designerTools.style.transform = `translate3d(${left}px, ${top}px, 0px)`;
     currentElement = el;
+    updateControlOutline(el, designerToolsPreview);
   }
 });
+
+function updateControlOutline(el, renderEl) {
+  var { top, left, width, height } = el.getBoundingClientRect();
+  renderEl.style.display = null;
+  renderEl.style.width = width + "px";
+  renderEl.style.height = height + "px";
+  renderEl.style.transform = `translate3d(${left}px, ${top}px, 0px)`;
+}
 
 function dragstart_cmp_handler(ev) {
   setDropEl(ev.target);
@@ -73,7 +78,7 @@ function dragstart_handler(ev) {
 }
 function setDropEl(el) {
   dropEl = el;
-  designerTools.style.display = "none";
+  designerToolsPreview.style.display = "none";
 }
 
 function dragover_handler(ev) {
@@ -90,6 +95,7 @@ function dragover_handler(ev) {
     } else {
       el.parentNode.insertBefore(dropEl, el.nextSibling);
     }
+    selectControl(currentElement);
   }
 }
 
@@ -102,4 +108,16 @@ function drop_handler(ev) {
 
 function isContainerElement(el) {
   return ["DIV", "UL", "LI"].indexOf(el.tagName) !== -1;
+}
+
+function selectControl(el) {
+  selectedElement = el;
+
+  while (elProperties.firstChild) {
+    elProperties.removeChild(elProperties.firstChild);
+  }
+  var textEl = document.createElement("div");
+  elProperties.appendChild(textEl);
+  textEl.textContent = el.tagName;
+  updateControlOutline(selectedElement, designerTools);
 }
