@@ -121,3 +121,11 @@ function selectControl(el) {
   textEl.textContent = el.tagName;
   updateControlOutline(selectedElement, designerTools);
 }
+
+function removeControl(evt) {
+  if (selectedElement) {
+    selectedElement.parentElement.removeChild(selectedElement);
+    selectedElement = null;
+    designerTools.style.display = "none";
+  }
+}
