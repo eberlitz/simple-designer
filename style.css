@@ -1,0 +1,50 @@
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+}
+
+#viewer, .flex {
+    flex: 1;
+}
+
+
+.components, .properties {
+    background-color: rgba(214, 214, 214, 0.527);
+    width: 200px;
+    height: 100%;
+}
+.components > div {
+    padding: 10px;
+    border: 1px solid lightblue;
+}
+
+#designer-tools {
+    position: absolute;
+    pointer-events: none;
+    border: 1px solid lightblue;
+    border: 1px solid #4a87ee;
+    border-radius: 3px;
+    background-color: rgba(105, 151, 242, 0.05);
+    z-index: 15;
+}
+
+#designer-tools > div {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.designer-toolset {
+    pointer-events: all;
+    position: absolute;
+    right: 10px;
+    top: -10px;
+}

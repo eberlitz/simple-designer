@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="components">
+        <div draggable="true" ondragstart="dragstart_handler(event);">input</div>
+        <div draggable="true" ondragstart="dragstart_handler(event);">button</div>
+        <div draggable="true" ondragstart="dragstart_handler(event);">select</div>
+        <div draggable="true" ondragstart="dragstart_handler(event);">li</div>
+    </div>
+    <div class="flex">
+        <div id="viewer" class="flex" ondragstart="dragstart_cmp_handler(event);" ondragover="dragover_handler(event);" ondrop="drop_handler(event);">
+            <ul>
+                <li>
+                    <input type="text">
+                </li>
+                <li>
+                    <button>OK</button>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="properties">
+
+    </div>
+    <div id="designer-tools">
+        <div>
+            <div class="designer-toolset">
+                <button>x</button>
+            </div>
+        </div>
+    </div>
+    <script src="main.js"></script>
+</body>
+
+</html>
